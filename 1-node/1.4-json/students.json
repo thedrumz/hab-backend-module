@@ -1,0 +1,104 @@
+{
+  "students": [
+    {
+      "fullname": "Yéssica Lobato Galan",
+      "dni": "94232428W",
+      "grade": 3
+    },
+    {
+      "fullname": "Telmo Mateu Tomé",
+      "dni": "50299724N",
+      "grade": 7.5
+    },
+    {
+      "fullname": "Clímaco Guillén Gutiérrez",
+      "dni": "",
+      "grade": 5
+    },
+    {
+      "fullname": "Amílcar Elpidio Cabanillas Egea",
+      "dni": "43119908Z",
+      "grade": 8
+    },
+    {
+      "fullname": "Fortunato Silvestre Ribera Bermúdez",
+      "dni": "57056537T",
+      "grade": 10
+    },
+    {
+      "fullname": "Irene Pinedo Bustos",
+      "dni": "59834121N",
+      "grade": 2.3
+    },
+    {
+      "fullname": "Manu Catalá Ferrández",
+      "dni": "16396864A",
+      "grade": 0
+    },
+    {
+      "fullname": "Diego Sarmiento Pérez",
+      "dni": null,
+      "grade": 9.4
+    },
+    {
+      "fullname": "Priscila Prado Pinedo",
+      "dni": "68634929P",
+      "grade": 6.9
+    },
+    {
+      "fullname": "Carmelita Cabrero Yáñez",
+      "dni": "53573867J",
+      "grade": 7
+    },
+    {
+      "fullname": "Venceslás Quirós Gómez",
+      "dni": "64444643T",
+      "grade": 2
+    },
+    {
+      "fullname": "Eric Jafet Sanmartín Alberto",
+      "dni": "67938881DD",
+      "grade": 6.1
+    },
+    {
+      "fullname": "Sofía Leiva Benitez",
+      "dni": "6519a101Q",
+      "grade": 4
+    },
+    {
+      "fullname": "Jose Antonio Ramírez Cortina",
+      "dni": "37925008D",
+      "grade": 5
+    },
+    {
+      "fullname": "Jose Miguel Sainz Delgado",
+      "dni": "42945468Y",
+      "grade": 7
+    },
+    {
+      "fullname": "Bienvenida Gaya Figuerola",
+      "dni": "32131658Z",
+      "grade": 3.2
+    },
+    {
+      "fullname": "Fausto Pol Martínez",
+      "dni": "10306948G",
+      "grade": 6.7
+    },
+    {
+      "fullname": "Chucho Pujol Coloma",
+      "dni": "03850639W",
+      "grade": 5.5
+    },
+    {
+      "fullname": "Jennifer Olivares Anglada",
+      "dni": "85364616R",
+      "grade": 4
+    },
+    {
+      "fullname": "Íngrid Aparicio Roura",
+      "dni": "15264536B",
+      "grade": 6
+    }
+  ]
+}
