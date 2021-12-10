@@ -1,13 +1,13 @@
 const fs = require('fs').promises
+const NoFileException = require('./NoFileException')
 
-async function csvReader({ filePath, fileName }) {
+async function csvReader(file) {
   let data
   try {
-    const result = await fs.readFile(`${filePath}/${fileName}.csv`);
+    const result = await fs.readFile(file);
     data = result.toString()
   } catch (err) {
-    console.error(`error reading file ${filePath}/${fileName}.csv`);
-    process.exit()
+    throw new NoFileException(file)
   }
 
   const arrayLines = data.split('\n')

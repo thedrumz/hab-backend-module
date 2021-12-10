@@ -1,11 +1,7 @@
 const fs = require('fs').promises
 
-async function txtWriter({ filePath, fileName, content }) {
-  try {
-    await fs.writeFile(`${filePath}/${fileName}.txt`, content);
-  } catch (err) {
-    console.error(err);
-  }
+async function txtWriter({ file, content }) {
+  fs.writeFile(file, content);
 }
 
 module.exports = txtWriter
