@@ -28,7 +28,7 @@ let users = [
 const getUsers = ({ from = 0, limit }) => {
   if (!from && !limit) return users
 
-  return users.slice(from).filter((user, index) => !limit ? true : index < limit)
+  return users.slice(from - 1).filter((user, index) => !limit ? true : index < limit)
 }
 
 const getUserById = (userId) => {
@@ -44,10 +44,10 @@ const saveUser = (user) => {
   return newUser
 }
 
-const editUser = (user) => {
-  const userIndex = users.findIndex(userOfUsers => userOfUsers.id === user.id)
+const editUser = ({ user, userId }) => {
+  const userIndex = users.findIndex(userOfUsers => userOfUsers.id === userId)
   
-  users[userIndex] = { ...user }
+  users[userIndex] = { ...user, id: userId }
 
   return user
 }
