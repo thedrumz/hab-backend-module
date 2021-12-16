@@ -7,14 +7,14 @@ const PORT = 3000
 
 app.use(express.json())
 
-app.get('/users', async (req, res) => {
+app.get('/users', (req, res) => {
   const { from, limit } = req.query
 
   res.status(200)
   res.send(usersRepository.getUsers({ from, limit }))
 })
 
-app.get('/users/:userId', async (req, res) => {
+app.get('/users/:userId', (req, res) => {
   const userId = Number(req.params.userId)
   const user = usersRepository.getUserById(userId)
 
@@ -27,7 +27,7 @@ app.get('/users/:userId', async (req, res) => {
   }
 })
 
-app.post('/users', async (req, res) => {
+app.post('/users', (req, res) => {
   const user = req.body
 
   if (!user) {
@@ -39,19 +39,20 @@ app.post('/users', async (req, res) => {
   }
 })
 
-app.put('/users', async (req, res) => {
+app.put('/users/:userId', (req, res) => {
   const user = req.body
+  const userId = req.params.userId
 
   if (!user) {
     res.status(400)
     res.end('You should provide a valid user to save')
   } else {
     res.status(200)
-    res.send(usersRepository.editUser(user))
+    res.send(usersRepository.editUser({ user, userId }))
   }
 })
 
-app.delete('/users/:userId', async (req, res) => {
+app.delete('/users/:userId', (req, res) => {
   const userId = Number(req.params.userId)
 
   if (!usersRepository.removeUser(userId)) {
