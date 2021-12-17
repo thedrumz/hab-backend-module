@@ -15,7 +15,7 @@ app.use(express.json())
 // MIDDLEWARES
 // ===========
 
-const isAuth = (req, res, next) => {
+const isAuthorized = (req, res, next) => {
   const bearerToken = req.headers.authorization
   
   if (!bearerToken) {
@@ -35,19 +35,19 @@ const isAuth = (req, res, next) => {
     return
   }
 
-  req.user = { id: decodedToken.userId }
+  req.user = { ...decodedToken.user }
 
   next()
 }
 
-app.get('/users', isAuth, async (req, res) => {
+app.get('/users', isAuthorized, (req, res) => {
   const { from, limit } = req.query
 
   res.status(200)
   res.send(usersRepository.getUsers({ from, limit }))
 })
 
-app.get('/users/:userId', isAuth, async (req, res) => {
+app.get('/users/:userId', isAuthorized, (req, res) => {
   const userId = Number(req.params.userId)
   const user = usersRepository.getUserById(userId)
 
@@ -60,7 +60,7 @@ app.get('/users/:userId', isAuth, async (req, res) => {
   }
 })
 
-app.post('/users', isAuth, async (req, res) => {
+app.post('/users', isAuthorized, (req, res) => {
   const user = req.body
 
   if (!user) {
@@ -72,7 +72,7 @@ app.post('/users', isAuth, async (req, res) => {
   }
 })
 
-app.put('/users', isAuth, async (req, res) => {
+app.put('/users', isAuthorized, (req, res) => {
   const user = req.body
 
   if (!user) {
@@ -84,7 +84,7 @@ app.put('/users', isAuth, async (req, res) => {
   }
 })
 
-app.delete('/users/:userId', isAuth, async (req, res) => {
+app.delete('/users/:userId', isAuthorized, (req, res) => {
   const userId = Number(req.params.userId)
 
   if (!usersRepository.removeUser(userId)) {
@@ -146,7 +146,7 @@ app.post('/auth/login', async (req, res) => {
     res.end('User not found')
     return
   }
-
+  
   if (!await bcrypt.compare(credentials.password, user.password)) {
     res.status(403)
     res.end('Invalid credentials')
@@ -155,7 +155,7 @@ app.post('/auth/login', async (req, res) => {
 
   const token = jwt.sign({
     exp: Math.floor(Date.now() / 1000) + JWT_EXPIRES_AFTER,
-    userId: user.id
+    user: { id: user.id }
   }, JWT_PRIVATE_KEY);
 
   res.status(200)
