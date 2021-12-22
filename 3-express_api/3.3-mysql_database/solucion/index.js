@@ -1,6 +1,8 @@
+const crypto = require("crypto")
 const express = require('express')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const emailSender = require('./emailSender')
 // const usersRepository = require('./repository/inMemoryUsersRepository')
 const usersRepository = require('./repository/mysql/mysqlUsersRepository')
 
@@ -182,14 +184,17 @@ app.post('/auth/register', async (req, res) => {
     return
   }
 
+  const registrationCode = crypto.randomBytes(40).toString('hex')
   let savedUser
   try {
-    savedUser = await usersRepository.saveUser({ ...user, password: encryptedPassword })
+    savedUser = await usersRepository.saveUser({ ...user, password: encryptedPassword, registrationCode })
   } catch (error) {
     res.status(500)
     res.end('Database error')
     return
   }
+
+  emailSender.accountConfirmationEmail({ sendTo: savedUser.email, code: registrationCode })
 
   const { password, ...userToReturn } = savedUser
   
@@ -234,6 +239,28 @@ app.post('/auth/login', async (req, res) => {
 
   res.status(200)
   res.send({ token })
+})
+
+app.get('/auth/confirm', async (req, res, next) => {
+  const { code } = req.query
+
+  if (!code) {
+    res.status(400)
+    res.end('No registration code')
+    return
+  }
+
+  try {
+    await usersRepository.confirmAccount(code)
+  } catch (error) {
+    res.status(400)
+    res.end('Invalid registration code')
+    return
+  }
+
+  res.status(200)
+  res.end('Account verifyed')
+  next()
 })
 
 app.listen(PORT, () => {

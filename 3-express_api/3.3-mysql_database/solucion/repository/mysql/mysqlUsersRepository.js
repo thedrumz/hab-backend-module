@@ -55,6 +55,18 @@ const getUserByEmail = async (userEmail) => {
   return result[0] && result[0][0]
 }
 
+const confirmAccount = async (code) => {
+  const [users] = await connection.query("SELECT * FROM users WHERE registrationCode = ?", [code])
+
+  if (!users.length) {
+    throw new Error()
+  }
+
+  await connection.query("UPDATE users SET registrationCode = null, active = true WHERE id = ?", [users[0].id])
+
+  return true
+}
+
 module.exports = {
   getUsers,
   getUserById,
@@ -62,5 +74,6 @@ module.exports = {
   editUser,
   removeUser,
   userExists,
-  getUserByEmail
+  getUserByEmail,
+  confirmAccount
 }
